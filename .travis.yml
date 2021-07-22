@@ -18,8 +18,15 @@ after_success:
   # Log in to the docker CLI
   # echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker login -u "$DOCKER_ID" -p "$DOCKER_PASSWORD" docker.io
+
+  # Tag the images with docker username prefix
+  - docker tag madhu/multi-client dockerjhili/multi-client
+  - docker tag madhu/multi-nginx dockerjhili/multi-nginx
+  - docker tag madhu/multi-server dockerjhili/multi-server
+  - docker tag madhu/multi-worker dockerjhili/multi-worker
+
   # Take those images and push them to docker hub
-  - docker push madhu/multi-client
-  - docker push madhu/multi-nginx
-  - docker push madhu/multi-server
-  - docker push madhu/multi-worker
+  - docker push dockerjhili/multi-client
+  - docker push dockerjhili/multi-nginx
+  - docker push dockerjhili/multi-server
+  - docker push dockerjhili/multi-worker
