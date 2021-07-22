@@ -1,4 +1,4 @@
-sudo: required
+asudo: required
 language: generic
 
 services:
@@ -8,19 +8,16 @@ before_install:
   - docker build -t madhu/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run madhu/react-test npm test
+  - docker run -e CI=true madhu/react-test npm test
 
 after_success:
   - docker build -t madhu/multi-client ./client
   - docker build -t madhu/multi-nginx ./nginx
   - docker build -t madhu/multi-server ./server
   - docker build -t madhu/multi-worker ./worker
-
-  #login to docker CLI
+  # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-
-  # push images to docker hub
-
+  # Take those images and push them to docker hub
   - docker push madhu/multi-client
   - docker push madhu/multi-nginx
   - docker push madhu/multi-server
